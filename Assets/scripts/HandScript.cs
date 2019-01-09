@@ -147,6 +147,10 @@ public class HandScript : MonoBehaviour
 #if STEAM_VR
             Vector3 pHandPos_L = UnityEngine.XR.InputTracking.GetLocalPosition(UnityEngine.XR.XRNode.LeftHand);
             Quaternion pHandRot_L = UnityEngine.XR.InputTracking.GetLocalRotation(UnityEngine.XR.XRNode.LeftHand);
+            
+            // so we are able to juggle around
+            pHandRot_L = RotateUpsideDown(pHandRot_L);
+
             transform.position = pHandPos_L;
             transform.rotation = pHandRot_L;
 #endif
@@ -173,6 +177,10 @@ public class HandScript : MonoBehaviour
 #if STEAM_VR
             Vector3 pHandPos_R = UnityEngine.XR.InputTracking.GetLocalPosition(UnityEngine.XR.XRNode.RightHand );
             Quaternion pHandRot_R = UnityEngine.XR.InputTracking.GetLocalRotation(UnityEngine.XR.XRNode.RightHand );
+
+            // so we are able to juggle around
+            pHandRot_R = RotateUpsideDown( pHandRot_R );
+
             transform.position = pHandPos_R;
             transform.rotation = pHandRot_R;
 #endif
@@ -208,7 +216,7 @@ public class HandScript : MonoBehaviour
             BallScript pBallScript = pNewBall.GetComponent<BallScript>();
             pBallScript.SpawnBall(this, false);
             Rigidbody rb = pNewBall.GetComponent<Rigidbody>();
-            rb.velocity = -transform.up;
+            rb.velocity = -transform.up * 2;
             rb.AddTorque( UnityEngine.Random.insideUnitSphere );
         }
         else
@@ -265,5 +273,10 @@ public class HandScript : MonoBehaviour
         {
             AddBoneScriptToAllChildren(t.GetChild(i));
         }
+    }
+
+    private Quaternion RotateUpsideDown( Quaternion original )
+    {
+        return original * Quaternion.Euler( new Vector3( 0, 0, 180 ) );
     }
 }

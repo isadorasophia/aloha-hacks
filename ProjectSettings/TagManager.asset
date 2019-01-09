@@ -9,6 +9,7 @@ TagManager:
   - RightArm
   - GenerationPoint
   - Floor
+  - water
   layers:
   - Default
   - TransparentFX

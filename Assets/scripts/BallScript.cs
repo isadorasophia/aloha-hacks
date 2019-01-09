@@ -14,6 +14,7 @@ public class BallScript : MonoBehaviour {
     public GameObject m_pConfetti;
     public Material m_pNormalMaterial;
     public Material m_pColliderDisabledMaterial;
+    public Material [] BallSkins;
     
     bool m_bJustReleased;
     float m_fStartTime;
@@ -44,6 +45,17 @@ public class BallScript : MonoBehaviour {
         m_fStartTime = Time.time;
         m_fLastTouchedHandTime = m_fStartTime;
         m_bColliderOn = true;
+
+        if( BallSkins != null )
+        {
+            if( BallSkins.Length > 0 )
+            {
+                int SkinCount = BallSkins.Length;
+                int RandomSkinIndex = (int) Random.Range( 0, SkinCount );
+                Renderer pRenderer = GetComponent<Renderer>();
+                pRenderer.material = BallSkins [RandomSkinIndex];
+            }
+        }
     }
 	
     void StartDeath( )
@@ -258,6 +270,14 @@ public class BallScript : MonoBehaviour {
                     EnsureColliderOn();
                 }
             }
+
+            // if it's in water, make it bob
+            if( m_bInWater )
+            {
+                m_fBobAngle += 0.1f;
+                Rigidbody rb = GetComponent<Rigidbody>();
+                transform.position += new Vector3( 0, 0.01f * ( 4.0f / 36.0f ) * Mathf.Sin( m_fBobAngle ), 0 );
+            }
         } // not held
 
     }
@@ -291,9 +311,32 @@ public class BallScript : MonoBehaviour {
         return Vector3.Distance(transform.position, t);
     }
 
+    bool m_bInWater = false;
+    float m_fBobAngle = 0;
+
+    void _EnterWater( )
+    {
+        m_bInWater = true;
+    }
+
+    void _LeaveWater( )
+    {
+        m_bInWater = false;
+    }
+
     void OnCollisionEnter(Collision c)
     {
         m_fLastCollisionTime = Time.time;
+
+        if( c.transform.tag == "water" )
+        {
+            // the ball hit water. add a sine wave until it hits something NOT water
+            _EnterWater();
+        }
+        else
+        {
+            _LeaveWater();
+        }
 
         if (c.gameObject.layer == 8)
         {
