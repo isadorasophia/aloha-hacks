@@ -18,16 +18,16 @@ public class ButtonToggle : MonoBehaviour
         
     }
 
-    void OnTriggerEnter(Collider col)
+    void OnCollisionEnter(Collider col)
     {
         if(col.gameObject.layer == 8)
         {
-            text.color = new Vector4(140f, 218f, 228f, 255f);
-            GetComponent<Image>().color = new Vector4(250f, 148f, 45f, 255f);
+            text.color = new Vector4(0f, 0f, 0f, 255f);
+            GetComponent<Image>().color = new Vector4(255f, 255f, 255f, 255f);
         }
     }
 
-    void OnTriggerExit(Collider col)
+    void OnCollisionExit(Collider col)
     {
         if (col.gameObject.layer == 8)
         {

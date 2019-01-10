@@ -5,11 +5,12 @@ using UnityEngine;
 public class SeagullSpawner : MonoBehaviour
 {
     public GameObject seagullPrefab;
-    private int spawnTimer = 0;
-    private int flapTimer = 0;
+    private float spawnTimer = 0;
+    private float flapTimer = 0;
     private bool flying = false;
     private GameObject seagull;
     private Animator anim;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,23 +24,25 @@ public class SeagullSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        spawnTimer++;
-        flapTimer++;
+        spawnTimer += Time.deltaTime;
+        flapTimer += Time.deltaTime;
 
         if (flying)
-            seagull.transform.Translate(0, 0.02f, 0.058f);
+            seagull.transform.Translate(0, 0.02f, 0.06f);
 
-        if (flying && flapTimer > 150)
+        if (flying && flapTimer > 2)
         {
             anim.Play("Flap");
             flapTimer = 0;
         }
 
-        if (spawnTimer > 200)
+        if (spawnTimer > 5)
         {
             anim.Play("Flap");
             flying = true;
             spawnTimer = 0;
         }
     }
+
+
 }

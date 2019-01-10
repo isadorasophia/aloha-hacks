@@ -12,7 +12,7 @@ public class Water_Interaction : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        layer_index = LayerMask.GetMask("Balls");
+        
     }
 
     // Update is called once per frame
@@ -23,7 +23,7 @@ public class Water_Interaction : MonoBehaviour
 
     void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.layer == layer_index)
+        if (col.gameObject.layer == 8)
         {
             Vector3 pNewParticlePos = col.gameObject.transform.position;
             GameObject pNewParticle = Instantiate(_WaterParticlePrefab);
