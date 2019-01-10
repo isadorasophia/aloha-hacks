@@ -6973,15 +6973,15 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -456
       objectReference: {fileID: 0}
-    - target: {fileID: 4217108371829681984, guid: 818921abd36fcb04cbaef67e8c4c9588,
-        type: 3}
-      propertyPath: m_TagString
-      value: Crate_Small
-      objectReference: {fileID: 0}
     - target: {fileID: 2529347976558569959, guid: 818921abd36fcb04cbaef67e8c4c9588,
         type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4217108371829681984, guid: 818921abd36fcb04cbaef67e8c4c9588,
+        type: 3}
+      propertyPath: m_TagString
+      value: Crate_Small
       objectReference: {fileID: 0}
     - target: {fileID: 2927399970021174105, guid: 818921abd36fcb04cbaef67e8c4c9588,
         type: 3}
@@ -7190,9 +7190,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddaac829a64944a44bd56b8e1e8b7fba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _particleLayers:
-    serializedVersion: 2
-    m_Bits: 512
   _WaterParticlePrefab: {fileID: 4695496417576716777, guid: be6d8e05762649c40a34fdd725276261,
     type: 3}
 --- !u!65 &631740759
@@ -7203,7 +7200,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 631740756}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 140, y: 0.1, z: 40}
@@ -18840,11 +18837,6 @@ PrefabInstance:
       propertyPath: m_PlaneDistance
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 5708696853345347195, guid: 592f4bc3b290aa94f9f3149b94d7115e,
-        type: 3}
-      propertyPath: m_IsTrigger
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7480586804335539786, guid: 592f4bc3b290aa94f9f3149b94d7115e,
         type: 3}
       propertyPath: m_IsActive
@@ -18854,6 +18846,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5708696853345347195, guid: 592f4bc3b290aa94f9f3149b94d7115e,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 592f4bc3b290aa94f9f3149b94d7115e, type: 3}
