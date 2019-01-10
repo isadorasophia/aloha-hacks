@@ -149,7 +149,7 @@ public class HandScript : MonoBehaviour
             Quaternion pHandRot_L = UnityEngine.XR.InputTracking.GetLocalRotation(UnityEngine.XR.XRNode.LeftHand);
             
             // so we are able to juggle around
-            pHandRot_L = RotateUpsideDown(pHandRot_L);
+            //pHandRot_L = RotateUpsideDown(pHandRot_L);
 
             transform.localPosition = pHandPos_L;
             transform.localRotation = pHandRot_L;
@@ -197,7 +197,7 @@ public class HandScript : MonoBehaviour
             Quaternion pHandRot_R = UnityEngine.XR.InputTracking.GetLocalRotation(UnityEngine.XR.XRNode.RightHand );
 
             // so we are able to juggle around
-            pHandRot_R = RotateUpsideDown( pHandRot_R );
+            //pHandRot_R = RotateUpsideDown( pHandRot_R );
 
             transform.localPosition = pHandPos_R;
             transform.localRotation = pHandRot_R;
