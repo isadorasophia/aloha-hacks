@@ -6,12 +6,13 @@ public class Water_Interaction : MonoBehaviour
 {
     [SerializeField]
     private LayerMask _particleLayers;
+    private LayerMask layer_index;
     public GameObject _WaterParticlePrefab;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        layer_index = LayerMask.GetMask("Balls");
     }
 
     // Update is called once per frame
@@ -20,19 +21,14 @@ public class Water_Interaction : MonoBehaviour
         
     }
 
-    void OnCollisionEnter(Collider col)
+    void OnTriggerEnter(Collider col)
     {
-        if (CheckForParticleLayer(col.gameObject.layer))
+        if (col.gameObject.layer == layer_index)
         {
             Vector3 pNewParticlePos = col.gameObject.transform.position;
             GameObject pNewParticle = Instantiate(_WaterParticlePrefab);
             pNewParticle.transform.position = pNewParticlePos;
             Destroy(pNewParticle, 2f);
         }
-    }
-
-    private bool CheckForParticleLayer(LayerMask layer)
-    {
-        return layer == (_particleLayers | (1 << layer));
     }
 }
