@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Water_Interaction : MonoBehaviour
 {
-    [SerializeField]
+    /*[SerializeField]
     private LayerMask _particleLayers;
-    private LayerMask layer_index;
+    private LayerMask layer_index;*/
     public GameObject _WaterParticlePrefab;
 
     // Start is called before the first frame update
@@ -23,8 +23,9 @@ public class Water_Interaction : MonoBehaviour
 
     void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.layer == 8)
+        if (col.gameObject.tag == "Ball")
         {
+            Debug.Log("No really please");
             Vector3 pNewParticlePos = col.gameObject.transform.position;
             GameObject pNewParticle = Instantiate(_WaterParticlePrefab);
             pNewParticle.transform.position = pNewParticlePos;
