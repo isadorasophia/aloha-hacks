@@ -15,7 +15,10 @@ GameObject:
   - component: {fileID: 54295979463842804}
   - component: {fileID: 82424157510815654}
   - component: {fileID: 114402847766020160}
+<<<<<<< HEAD
   - component: {fileID: 472353281628602665}
+=======
+>>>>>>> e5d317130000812b33f9020ee08385f0779ad3d9
   m_Layer: 9
   m_Name: Ball
   m_TagString: Untagged
@@ -232,6 +235,7 @@ MonoBehaviour:
   m_pNormalMaterial: {fileID: 2100000, guid: 3ec3f347e63cb4944aed1a81f5518918, type: 2}
   m_pColliderDisabledMaterial: {fileID: 2100000, guid: 361a6d575d7802343b7e594052a50d41,
     type: 2}
+<<<<<<< HEAD
 --- !u!114 &472353281628602665
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,3 +250,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DistanceThreshold: 150
   DistanceFromTag: Player
+=======
+  BallSkins:
+  - {fileID: 2100000, guid: 61371fffb877aa74196ee3f8f45d6cf2, type: 2}
+  - {fileID: 2100000, guid: 2c27fca61da19bd4ba64a043c3a02700, type: 2}
+  - {fileID: 2100000, guid: 7041cf5bb78f5004e8c2baf0070051d7, type: 2}
+  - {fileID: 2100000, guid: dd244aa421416db4886836c1fd2d18db, type: 2}
+  - {fileID: 2100000, guid: bb836788d23eeab4e858effc3a862334, type: 2}
+  - {fileID: 2100000, guid: 8f6234392f91fa34484281ea9dc4c319, type: 2}
+>>>>>>> e5d317130000812b33f9020ee08385f0779ad3d9
