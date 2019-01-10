@@ -289,8 +289,41 @@ public class BallScript : MonoBehaviour {
                 _AdjustBallToBeInCylinderPlane();
             }
 
+            _LimitBallVelocity();
+
         } // not held
 
+    }
+
+    void _LimitBallVelocity()
+    {
+        float maxSpeed = 5f;
+        if (m_pRigidBody.velocity.x > maxSpeed)
+        {
+            Debug.Log("change +x");
+            m_pRigidBody.velocity = new Vector3(maxSpeed, m_pRigidBody.velocity.y, m_pRigidBody.velocity.z);
+        }
+        if (m_pRigidBody.velocity.y > maxSpeed)
+        {
+            Debug.Log("change +y");
+            m_pRigidBody.velocity = new Vector3(m_pRigidBody.velocity.x, maxSpeed, m_pRigidBody.velocity.z);
+        }
+        if (m_pRigidBody.velocity.z > maxSpeed)
+        {
+            Debug.Log("change +z");
+            m_pRigidBody.velocity = new Vector3(m_pRigidBody.velocity.x, m_pRigidBody.velocity.y, maxSpeed);
+        }
+
+        if (m_pRigidBody.velocity.x < -maxSpeed)
+        {
+            Debug.Log("change -x");
+            m_pRigidBody.velocity = new Vector3(-maxSpeed, m_pRigidBody.velocity.y, m_pRigidBody.velocity.z);
+        }
+        if (m_pRigidBody.velocity.z < -maxSpeed)
+        {
+            Debug.Log("change -z");
+            m_pRigidBody.velocity = new Vector3(m_pRigidBody.velocity.x, m_pRigidBody.velocity.y, -maxSpeed);
+        }
     }
 
     void _AdjustBallToBeInCylinderPlane()
