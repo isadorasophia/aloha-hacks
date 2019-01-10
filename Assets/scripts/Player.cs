@@ -26,10 +26,8 @@ public class Player : MonoBehaviour
     void Update()
     {
         CalculateVelocity();
-        
-        Vector3 target = Vector3.Cross(_directionalInput, _velocity);
-        Debug.Log(_directionalInput);
-        _rigidBody.MovePosition(transform.position + target);
+       
+        _rigidBody.velocity = _velocity;
     }
 
     public void SetDirectionalInput(Vector2 input)
