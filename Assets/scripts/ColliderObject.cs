@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-using UnityEngine;
-using System.Collections;
-
 public class ColliderObject : MonoBehaviour
 {
     // Careful when setting this to true - it might cause double

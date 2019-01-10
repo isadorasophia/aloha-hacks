@@ -10,6 +10,7 @@ public class BallScript : MonoBehaviour {
     public AudioClip m_pBouncedOffHandSound;
     public AudioClip m_pBallDieSound;
     public AudioClip m_pCatchBallSound;
+    public AudioClip m_pCashRegisterSound;
     public GameObject m_pMarker;
     public GameObject m_pConfetti;
     public Material m_pNormalMaterial;
@@ -68,8 +69,7 @@ public class BallScript : MonoBehaviour {
 
         m_bStartedDeath = true;
 
-        AudioSource pSource = GetComponent<AudioSource>();
-        pSource.PlayOneShot(m_pBallDieSound);
+        _PlayAudioClip( m_pBallDieSound );
 
         gameObject.GetComponent<MeshRenderer>().enabled = false;
 
@@ -161,8 +161,7 @@ public class BallScript : MonoBehaviour {
 
                 Debug.Log("Release Velocity x= " + pVelocity.x + ", y=" + pVelocity.y + ", z=" + pVelocity.z);
 
-                AudioSource pSource = GetComponent<AudioSource>();
-                pSource.PlayOneShot(m_pBallOutSound);
+                _PlayAudioClip( m_pBallOutSound );
             }
         }
         else
@@ -186,8 +185,7 @@ public class BallScript : MonoBehaviour {
                             // it's close enough to start holding it
                             OnStartHolding(m_pLeftHand);
 
-                            AudioSource pSource = GetComponent<AudioSource>();
-                            pSource.PlayOneShot(m_pBallInSound);
+                            _PlayAudioClip( m_pBallInSound );
                         }
                         else
                         {
@@ -240,8 +238,7 @@ public class BallScript : MonoBehaviour {
                             // it's close enough to start holding it
                             OnStartHolding(m_pRightHand);
 
-                            AudioSource pSource = GetComponent<AudioSource>();
-                            pSource.PlayOneShot(m_pBallInSound);
+                            _PlayAudioClip( m_pBallInSound );
                         }
                         else
                         {
@@ -284,7 +281,35 @@ public class BallScript : MonoBehaviour {
                 Rigidbody rb = GetComponent<Rigidbody>();
                 transform.position += new Vector3( 0, 0.01f * ( 4.0f / 36.0f ) * Mathf.Sin( m_fBobAngle ), 0 );
             }
+
+            // if the ball is heading too far away from the player, adjust it with some force to stay "on a cylinder" 
+            _AdjustBallToBeInCylinderPlane();
+
         } // not held
+
+    }
+
+    void _AdjustBallToBeInCylinderPlane( )
+    {
+        Vector3 pPlayerPos = Player.Instance.transform.position;
+        float fDistanceFromPlayer = Vector3.Distance( transform.position, pPlayerPos );
+        // if the distance is too far...
+        float fCylinderShellDistance = 0.466f; // about 2 feet
+        if( fDistanceFromPlayer > fCylinderShellDistance )
+        {
+            // how far are we from the cylindrical shell? this doesn't depend on Y
+            Vector2 pBallXZ = new Vector2( transform.position.x, transform.position.z );
+            Vector3 pPlayerXZ = new Vector2( pPlayerPos.x, pPlayerPos.z );
+            // the XY distance
+            float fDistanceFromPlayerXZ = Vector2.Distance( pBallXZ, pPlayerXZ );
+            float fDistanceFromCylinder = Mathf.Abs( fDistanceFromPlayerXZ - fCylinderShellDistance );
+
+            // fashion a force to move the ball back towards the player
+            Vector3 pTowardsPlayer = new Vector3( pPlayerPos.x - transform.position.x, 0, pPlayerPos.z - transform.position.z );
+
+            Rigidbody rb = GetComponent<Rigidbody>();
+            rb.AddForce( pTowardsPlayer * fDistanceFromCylinder * 100.0f );
+        }
 
     }
 
@@ -344,15 +369,14 @@ public class BallScript : MonoBehaviour {
             _LeaveWater();
         }
 
-        if (c.gameObject.layer == 8)
+        if( c.gameObject.layer == 8 )
         {
             m_fLastTouchedHandTime = Time.time;
 
-            if (!m_bPlayedHitSound)
+            if( !m_bPlayedHitSound )
             {
                 m_bPlayedHitSound = true;
-                AudioSource pSource = GetComponent<AudioSource>();
-                pSource.PlayOneShot(m_pCatchBallSound);
+                _PlayAudioClip( m_pCatchBallSound );
             }
         }
         else if( c.gameObject.tag == "Floor" )
@@ -360,14 +384,19 @@ public class BallScript : MonoBehaviour {
             StartDeath();
             return;
         }
+        else if( c.gameObject.tag == "Crate_Small" )
+        {
+            _PlayAudioClip( m_pCashRegisterSound );
+            StartDeath();
+            return;
+        }
         else
         {
-            if (!m_bPlayedHitSound)
+            if( !m_bPlayedHitSound )
             {
                 m_bPlayedHitSound = true;
                 GameObject pObject = c.gameObject;
-                AudioSource pSource = GetComponent<AudioSource>();
-                pSource.PlayOneShot(m_pBouncedOffHandSound);
+                _PlayAudioClip( m_pBouncedOffHandSound );
             }
         }
     }
@@ -415,7 +444,12 @@ public class BallScript : MonoBehaviour {
             OnReleasedFromHolding();
         }
 
+        _PlayAudioClip( m_pBallSpawnedSound );
+    }
+
+    void _PlayAudioClip( AudioClip pClip )
+    {
         AudioSource pSource = GetComponent<AudioSource>();
-        pSource.PlayOneShot(m_pBallSpawnedSound);
+        pSource.PlayOneShot( pClip );
     }
 }

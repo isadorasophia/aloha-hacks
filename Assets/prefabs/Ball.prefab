@@ -102,7 +102,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1655482397155902}
   serializedVersion: 2
-  m_Mass: 300
+  m_Mass: 30
   m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 1
@@ -225,6 +225,8 @@ MonoBehaviour:
     type: 3}
   m_pBallDieSound: {fileID: 8300000, guid: 21bb3ee1964139d4d9c6f0fe6b2083e1, type: 3}
   m_pCatchBallSound: {fileID: 8300000, guid: ccbd3dceea404ff489469ddc2eb2c51a, type: 3}
+  m_pCashRegisterSound: {fileID: 8300000, guid: 212cd65bc1384a847913964601b02995,
+    type: 3}
   m_pMarker: {fileID: 1378201043788758, guid: 1dda27b6ed610ad4c84be56b9f069303, type: 3}
   m_pConfetti: {fileID: 1806836418493204, guid: 0cecbb25c26f8482484bd192c9b194f0,
     type: 3}
