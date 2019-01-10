@@ -10,6 +10,7 @@ TagManager:
   - GenerationPoint
   - Floor
   - water
+  - waterParticle
   layers:
   - Default
   - TransparentFX
@@ -22,7 +23,7 @@ TagManager:
   - Hands
   - Balls
   - Floor
-  - 
+  - WaterParticle
   - 
   - 
   - 
