@@ -157,7 +157,17 @@ public class HandScript : MonoBehaviour
             // transform.rotation = pHandRot_L;
 #endif
 
-            if (Input.GetAxis(m_szGripAxisName) >= 0.5f)
+            if( Input.GetAxis( m_szTriggerAxisName ) > 0.05f )
+            {
+                // turn collider off, we want to GRAB the ball, not smack it
+                _TurnColliderOff();
+            }
+            else
+            {
+                _TurnColliderOn();
+            }
+
+            if (Input.GetAxis(m_szGripAxisName) >= 0.5f) // middle finger
             {
                 if (Input.GetAxis(m_szTriggerAxisName) > 0.5)
                 {
@@ -194,6 +204,16 @@ public class HandScript : MonoBehaviour
             // transform.position = pHandPos_R;
             // transform.rotation = pHandRot_R;
 #endif
+
+            if( Input.GetAxis( m_szTriggerAxisName ) > 0.05f )
+            {
+                // turn collider off, we want to GRAB the ball, not smack it
+                _TurnColliderOff();
+            }
+            else
+            {
+                _TurnColliderOn();
+            }
 
             if( Input.GetAxis(m_szGripAxisName) >= 0.5f)
             {
@@ -279,6 +299,34 @@ public class HandScript : MonoBehaviour
     public Vector3 GetPalmVelocityDuringBallThrow( )
     {
         return m_pPalmFollowerScript.GetLatestVelocityForThrowingBall();
+    }
+
+    void _TurnColliderOn( )
+    {
+        int childCount = transform.childCount;
+        for( int i = 0 ; i < childCount ; i++ )
+        {
+            Transform tChild = transform.GetChild( i );
+            Collider pChildCollider = tChild.GetComponent<Collider>();
+            if( pChildCollider )
+            {
+                pChildCollider.enabled = true;
+            }
+        }
+    }
+
+    void _TurnColliderOff( )
+    {
+        int childCount = transform.childCount;
+        for( int i = 0 ; i < childCount ; i++ )
+        {
+            Transform tChild = transform.GetChild( i );
+            Collider pChildCollider = tChild.GetComponent<Collider>();
+            if( pChildCollider )
+            {
+                pChildCollider.enabled = false;
+            }
+        }
     }
 
     void AddBoneScriptToAllChildren( Transform t )

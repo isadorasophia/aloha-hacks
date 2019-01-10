@@ -49,9 +49,10 @@ public class Player : MonoBehaviour
         _rigidBody.velocity = _velocity;
     }
 
-    public void SetDirectionalInput(Vector2 input)
+    public void SetDirectionalInput(Vector3 input)
     {
-        _directionalInput = new Vector3(input.x, 0, input.y);
+        _directionalInput = input;
+
         Debug.Log("Processing input of: " + input.x + " and: " + input.y);
     }
 

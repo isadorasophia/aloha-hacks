@@ -13,8 +13,6 @@ public class BallScript : MonoBehaviour {
     public AudioClip m_pCashRegisterSound;
     public GameObject m_pMarker;
     public GameObject m_pConfetti;
-    public Material m_pNormalMaterial;
-    public Material m_pColliderDisabledMaterial;
     public Material [] BallSkins;
     public bool m_valid;
 
@@ -162,7 +160,7 @@ public class BallScript : MonoBehaviour {
 
                 Debug.Log("Release Velocity x= " + pVelocity.x + ", y=" + pVelocity.y + ", z=" + pVelocity.z);
 
-                _PlayAudioClip( m_pBallOutSound );
+                // _PlayAudioClip( m_pBallOutSound );
             }
         }
         else
@@ -181,12 +179,12 @@ public class BallScript : MonoBehaviour {
 
                     if (fDistanceToHand_L < 0.05f)
                     {
-                        if (fTrigger > 0.25f)
+                        if (fTrigger > 0.05f)
                         {
                             // it's close enough to start holding it
                             OnStartHolding(m_pLeftHand);
 
-                            _PlayAudioClip( m_pBallInSound );
+                            // _PlayAudioClip( m_pBallInSound );
                         }
                         else
                         {
@@ -234,12 +232,12 @@ public class BallScript : MonoBehaviour {
 
                     if (fDistanceToHand < 0.05f)
                     {
-                        if (fTrigger > 0.25f)
+                        if (fTrigger > 0.05f)
                         {
                             // it's close enough to start holding it
                             OnStartHolding(m_pRightHand);
 
-                            _PlayAudioClip( m_pBallInSound );
+                            //_PlayAudioClip( m_pBallInSound );
                         }
                         else
                         {
@@ -406,7 +404,7 @@ public class BallScript : MonoBehaviour {
             _LeaveWater();
         }
 
-        if( c.gameObject.layer == 8 )
+        if( c.gameObject.layer == 8 ) // hands
         {
             m_fLastTouchedHandTime = Time.time;
 
@@ -451,8 +449,6 @@ public class BallScript : MonoBehaviour {
         }
 
         m_bColliderOn = true;
-        Renderer pRenderer = GetComponent<Renderer>();
-        pRenderer.material = m_pNormalMaterial;
     }
 
     void EnsureColliderOff( )
@@ -463,8 +459,6 @@ public class BallScript : MonoBehaviour {
         }
 
         m_bColliderOn = false;
-        Renderer pRenderer = GetComponent<Renderer>();
-        pRenderer.material = m_pColliderDisabledMaterial;
     }
 
     public void SpawnBall( HandScript pHand, bool bIsStartedWhileHeld )
