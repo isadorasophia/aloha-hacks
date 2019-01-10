@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
         _rigidBody = GetComponent<Rigidbody>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         CalculateVelocity();
        
