@@ -30,6 +30,7 @@ public class BallScript : MonoBehaviour {
     bool m_bPlayedHitSound;
     bool m_bColliderOn;
 
+
     void _CheckLoadInitStuff( )
     {
         m_pRigidBody = GetComponent<Rigidbody>();
@@ -95,6 +96,11 @@ public class BallScript : MonoBehaviour {
         {
             StartDeath();
             return;
+        }
+
+        if( fNow - m_fStartTime > 10.0f )
+        {
+            StartDeath();
         }
 
         if( transform.position.y < -5.0f ) // world position, hit the floor

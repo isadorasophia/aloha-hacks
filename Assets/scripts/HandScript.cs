@@ -31,6 +31,8 @@ public class HandScript : MonoBehaviour
     static HandScript s_pLeftHand;
     static HandScript s_pRightHand;
 
+    float m_fStartHold = 0;
+
     void Start()
     {
         if (name.Contains("Left"))
@@ -145,14 +147,18 @@ public class HandScript : MonoBehaviour
         if (m_bIsLeftHand == true)
         {
 #if STEAM_VR
+            // we get the local position of the hand relative to the camera. wherever the camera is, the
+            // position is relative to that.
             Vector3 pHandPos_L = UnityEngine.XR.InputTracking.GetLocalPosition(UnityEngine.XR.XRNode.LeftHand);
             Quaternion pHandRot_L = UnityEngine.XR.InputTracking.GetLocalRotation(UnityEngine.XR.XRNode.LeftHand);
             
             // so we are able to juggle around
             pHandRot_L = RotateUpsideDown(pHandRot_L);
 
-            transform.position = pHandPos_L;
-            transform.rotation = pHandRot_L;
+            transform.localPosition = pHandPos_L;
+            transform.localRotation = pHandRot_L;
+            // transform.position = pHandPos_L;
+            // transform.rotation = pHandRot_L;
 #endif
 
             if (Input.GetAxis(m_szGripAxisName) >= 0.5f)
@@ -170,22 +176,30 @@ public class HandScript : MonoBehaviour
                     }
                 }
             }
+            else
+            {
+                m_fStartHold = -1.0f;
+            }
 
         }
         else
         {
 #if STEAM_VR
+            // we get the local position of the hand relative to the camera. wherever the camera is, the
+            // position is relative to that.
             Vector3 pHandPos_R = UnityEngine.XR.InputTracking.GetLocalPosition(UnityEngine.XR.XRNode.RightHand );
             Quaternion pHandRot_R = UnityEngine.XR.InputTracking.GetLocalRotation(UnityEngine.XR.XRNode.RightHand );
 
             // so we are able to juggle around
             pHandRot_R = RotateUpsideDown( pHandRot_R );
 
-            transform.position = pHandPos_R;
-            transform.rotation = pHandRot_R;
+            transform.localPosition = pHandPos_R;
+            transform.localRotation = pHandRot_R;
+            // transform.position = pHandPos_R;
+            // transform.rotation = pHandRot_R;
 #endif
 
-            if (Input.GetAxis(m_szGripAxisName) >= 0.5f)
+            if( Input.GetAxis(m_szGripAxisName) >= 0.5f)
             {
                 if (Input.GetAxis(m_szTriggerAxisName) > 0.5)
                 {
@@ -200,6 +214,10 @@ public class HandScript : MonoBehaviour
                     }
                 }
             }
+            else
+            {
+                m_fStartHold = -1.0f;
+            }
         }
     }
 
@@ -211,12 +229,24 @@ public class HandScript : MonoBehaviour
         GameObject pNewBall = Instantiate(m_pBallPrefab);
         pNewBall.transform.position = pNewBallPos;
 
+        if( m_fStartHold == -1 )
+        {
+            m_fStartHold = Time.time;
+        }
+        float fTimeHeld = Time.time - m_fStartHold;
+
+        float fVelocityMultiplier = fTimeHeld;
+        if( fVelocityMultiplier < 1.0f )
+        {
+            fVelocityMultiplier = 1.0f;
+        }
+
         if( m_bIsLeftHand == true )
         {
             BallScript pBallScript = pNewBall.GetComponent<BallScript>();
             pBallScript.SpawnBall(this, false);
             Rigidbody rb = pNewBall.GetComponent<Rigidbody>();
-            rb.velocity = -transform.up * 2;
+            rb.velocity = -transform.up * 2 * fVelocityMultiplier;
             rb.AddTorque( UnityEngine.Random.insideUnitSphere );
         }
         else
