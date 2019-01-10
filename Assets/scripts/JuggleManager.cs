@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class JuggleManager : MonoBehaviour
 {
     public static JuggleManager Instance;
     public AudioClip m_pBonusFx;
+    public Text m_pInAirText;
 
     public List<BallScript> m_pBallList = new List<BallScript>();
 
@@ -29,6 +31,8 @@ public class JuggleManager : MonoBehaviour
 
         // has this ball been caught more than once, AND been shuffled from hand to hand?
         List<BallScript> pJuggledBalls = GetListOfBallsCurrentlyBeingJuggled();
+        m_pInAirText.text = "InAir: " + pJuggledBalls.Count.ToString();
+
         if( pJuggledBalls.Count > 0 )
         {
             // there are more than 1 balls being juggled, now, have the balls been caught multiple times?
