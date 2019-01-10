@@ -53,7 +53,7 @@ public class Player : MonoBehaviour
     {
         _directionalInput = input;
 
-        Debug.Log("Processing input of: " + input.x + " and: " + input.y);
+        // Debug.Log("Processing input of: " + input.x + " and: " + input.y);
     }
 
     private void CalculateVelocity()
