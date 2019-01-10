@@ -18,8 +18,11 @@ public class Player : MonoBehaviour
 
     private Rigidbody _rigidBody;
 
+    public static Player Instance;
+
     void Start()
     {
+        Instance = this;
         _rigidBody = GetComponent<Rigidbody>();
     }
 

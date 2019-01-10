@@ -12,7 +12,6 @@ public class HandScript : MonoBehaviour
     public GameObject m_pBallPrefab;
     public Transform GenerationPoint;
     public Material m_pNormalMaterial;
-    public Material m_pHoldingSomethingMaterial;
     public PhysicMaterial m_pHandMaterial;
 
     FollowerScript m_pPalmFollowerScript;
@@ -23,7 +22,6 @@ public class HandScript : MonoBehaviour
     string m_szTriggerAxisName;
     string m_szAnimationName;
     string m_szGripAxisName;
-    string m_szTouchpadVerticalAxisName;
     bool m_bIsLeftHand;
 
     GameObject m_pHeldBall;
@@ -41,7 +39,6 @@ public class HandScript : MonoBehaviour
             m_szTriggerAxisName = "TriggerLeft";
             m_szAnimationName = "Ghost_GripBallState_L" + "";
             m_szGripAxisName = "GripLeft";
-            m_szTouchpadVerticalAxisName = "Touchpad Vertical Left";
             s_pLeftHand = this;
         }
         else if (name.Contains("Right"))
@@ -50,7 +47,6 @@ public class HandScript : MonoBehaviour
             m_szTriggerAxisName = "TriggerRight";
             m_szAnimationName = "Ghost_GripBallState_R";
             m_szGripAxisName = "GripRight";
-            m_szTouchpadVerticalAxisName = "Touchpad Vertical Right";
             s_pRightHand = this;
         }
         else
@@ -167,8 +163,8 @@ public class HandScript : MonoBehaviour
                 {
                     float tNow = Time.time;
                     float tElapsed = tNow - m_LastTimeBallSpawned;
-                    if (tElapsed > 0.1f)
                     {
+                    if (tElapsed > 0.3f)
                         if (!IsHoldingBall())
                         {
                             SpawnBall();
@@ -236,10 +232,14 @@ public class HandScript : MonoBehaviour
         float fTimeHeld = Time.time - m_fStartHold;
 
         float fVelocityMultiplier = fTimeHeld;
+
         if( fVelocityMultiplier < 1.0f )
         {
             fVelocityMultiplier = 1.0f;
         }
+
+        // the velocity multiplier isn't such a great idea...
+        fVelocityMultiplier = 1.0f;
 
         if( m_bIsLeftHand == true )
         {
@@ -266,8 +266,6 @@ public class HandScript : MonoBehaviour
     public void StartHoldingBall( GameObject pBall )
     {
         m_pHeldBall = pBall;
-        Renderer pRenderer = GetComponentInChildren<Renderer>();
-        pRenderer.material = m_pHoldingSomethingMaterial;
 
     }
 
