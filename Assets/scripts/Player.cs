@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(AudioSource))]
 public class Player : MonoBehaviour
 {
     [SerializeField]
@@ -17,6 +19,8 @@ public class Player : MonoBehaviour
     private float _zVelocitySmoothing;
 
     private Rigidbody _rigidBody;
+    private Animator _animator;
+    private AudioSource _walkingSound;
 
     public static Player Instance;
 
@@ -24,6 +28,8 @@ public class Player : MonoBehaviour
     {
         Instance = this;
         _rigidBody = GetComponent<Rigidbody>();
+        _animator = GetComponent<Animator>();
+        _walkingSound = GetComponent<AudioSource>();
     }
 
     void FixedUpdate()
@@ -31,6 +37,9 @@ public class Player : MonoBehaviour
         CalculateVelocity();
        
         _rigidBody.velocity = _velocity;
+        
+        UpdateAnimator();
+        UpdateSounds();
     }
 
     public void SetDirectionalInput(Vector2 input)
@@ -46,5 +55,25 @@ public class Player : MonoBehaviour
 
         _velocity.x = Mathf.SmoothDamp(_velocity.x, xTargetVelocity, ref _xVelocitySmoothing, _accelarationTime);
         _velocity.z = Mathf.SmoothDamp(_velocity.z, zTargetVelocity, ref _zVelocitySmoothing, _accelarationTime);
+    }
+
+    private void UpdateAnimator()
+    {
+        _animator.SetFloat("velocity", _velocity.magnitude);
+    }
+
+    private void UpdateSounds()
+    {
+        if (_velocity.magnitude > .1f)
+        {
+            if (!_walkingSound.isPlaying)
+            {
+                _walkingSound.Play();
+            }
+        }
+        else
+        {
+            _walkingSound.Stop();
+        }
     }
 }
