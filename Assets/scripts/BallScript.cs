@@ -16,7 +16,8 @@ public class BallScript : MonoBehaviour {
     public Material m_pNormalMaterial;
     public Material m_pColliderDisabledMaterial;
     public Material [] BallSkins;
-    
+    public bool m_valid;
+
     bool m_bJustReleased;
     float m_fStartTime;
     float m_fLastCollisionTime;
@@ -283,13 +284,16 @@ public class BallScript : MonoBehaviour {
             }
 
             // if the ball is heading too far away from the player, adjust it with some force to stay "on a cylinder" 
-            _AdjustBallToBeInCylinderPlane();
+            if (m_valid)
+            {
+                _AdjustBallToBeInCylinderPlane();
+            }
 
         } // not held
 
     }
 
-    void _AdjustBallToBeInCylinderPlane( )
+    void _AdjustBallToBeInCylinderPlane()
     {
         Vector3 pPlayerPos = Player.Instance.transform.position;
         float fDistanceFromPlayer = Vector3.Distance( transform.position, pPlayerPos );
