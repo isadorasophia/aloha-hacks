@@ -27,7 +27,7 @@ public class PlayerInput : MonoBehaviour
     private void Update()
     {
         float xInput = Input.GetAxisRaw("Horizontal");
-        float yInput = Input.GetAxisRaw("Vertical");
+        float yInput = -Input.GetAxisRaw("Vertical"); // as we are rotated 180 degrees
 
         // gets rid of sensitive input
         if (Mathf.Abs(xInput) < xThreshold) xInput = 0;
