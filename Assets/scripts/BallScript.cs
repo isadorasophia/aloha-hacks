@@ -16,6 +16,9 @@ public class BallScript : MonoBehaviour {
     public Material [] BallSkins;
     public bool m_valid;
 
+    public bool m_bLastCaughtByLeftHand; // true if left hand, false if right hand or hit non-hand
+    public int m_nHowManyTimesCaughtByHands; // increments no matter which hand caught by
+
     bool m_bJustReleased;
     float m_fStartTime;
     float m_fLastCollisionTime;
@@ -29,6 +32,7 @@ public class BallScript : MonoBehaviour {
     bool m_bStartedDeath;
     bool m_bPlayedHitSound;
     bool m_bColliderOn;
+    int m_nTouchedOnlyHandCount = 0;
 
 
     void _CheckLoadInitStuff( )
@@ -42,6 +46,8 @@ public class BallScript : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
+        JuggleManager.Instance.m_pBallList.Add( this );
+
         _CheckLoadInitStuff();
         m_fStartTime = Time.time;
         m_fLastTouchedHandTime = m_fStartTime;
@@ -65,6 +71,8 @@ public class BallScript : MonoBehaviour {
         {
             return;
         }
+
+        JuggleManager.Instance.m_pBallList.Remove( this );
 
         m_bStartedDeath = true;
 
@@ -134,6 +142,7 @@ public class BallScript : MonoBehaviour {
 
         if (m_pHoldingHand != null)
         {
+            m_fStartTime = Time.time;
             m_fLastTouchedHandTime = fNow;
 
             // this ball is being held. If the user maintains a grip on the index button, we'll follow the hand.
@@ -404,8 +413,27 @@ public class BallScript : MonoBehaviour {
             _LeaveWater();
         }
 
+        if( c.gameObject.layer != 8 )
+        {
+            // ball collided with non-hand
+            JuggleManager.Instance.BallTouchedNonHand( this.gameObject );
+
+        }
+        else
+        {
+            // ball collided with hand
+            GameObject go = c.gameObject;
+            bool bLeftHanded = false;
+            if( go.tag.Contains( "Left" ) )
+            {
+                bLeftHanded = true;
+            }
+            JuggleManager.Instance.BallCaughtByHand( this.gameObject, bLeftHanded );
+        }
+
         if( c.gameObject.layer == 8 ) // hands
         {
+            m_fStartTime = Time.time;
             m_fLastTouchedHandTime = Time.time;
 
             if( !m_bPlayedHitSound )
