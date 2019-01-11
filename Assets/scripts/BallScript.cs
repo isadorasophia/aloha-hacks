@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BallScript : MonoBehaviour {
 
@@ -14,7 +15,7 @@ public class BallScript : MonoBehaviour {
     public GameObject m_pMarker;
     public GameObject m_pConfetti;
     public Material [] BallSkins;
-    public bool m_valid;
+    public Canvas m_pCanvas;
 
     public bool m_bLastCaughtByLeftHand; // true if left hand, false if right hand or hit non-hand
     public int m_nHowManyTimesCaughtByHands; // increments no matter which hand caught by
@@ -291,7 +292,7 @@ public class BallScript : MonoBehaviour {
             }
 
             // if the ball is heading too far away from the player, adjust it with some force to stay "on a cylinder" 
-            if (m_valid)
+            if (m_pCanvas.GetComponent<Button>().GetComponent<ButtonToggle>().valid)
             {
                 _AdjustBallToBeInCylinderPlane();
             }

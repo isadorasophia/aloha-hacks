@@ -19,22 +19,39 @@ public class ButtonToggle : MonoBehaviour
         
     }
 
-    void OnCollisionEnter(Collider col)
+    void OnTriggerEnter(Collider col)
     {
-        if(col.gameObject.layer == 8)
+        Debug.Log("I'm cry if toggle works");
+        //layer 8 is hand
+        if (col.gameObject.layer == 8)
         {
-            text.color = new Vector4(0f, 0f, 0f, 255f);
-            GetComponent<Image>().color = new Vector4(255f, 255f, 255f, 255f);
+            valid = !valid;
+            if (valid)
+            {
+                text.color = new Vector4(45, 250f, 140f, 255f);
+                GetComponent<Image>().color = new Vector4(255f, 255f, 255f, 255f);
+            }
+            else
+            {
+                text.color = new Vector4(250, 140f, 45f, 255f);
+                GetComponent<Image>().color = new Vector4(150f, 228f, 238f, 255f);
+            }
         }
     }
 
-    void OnCollisionExit(Collider col)
+    void OnTriggerExit(Collider col)
     {
-        if (col.gameObject.layer == 8)
-        {
-            text.color = new Vector4(100f, 178f, 188f, 255f);
-            GetComponent<Image>().color = new Vector4(220f, 110f, 15f, 255f);
-            valid = !valid;
-        }
+        Debug.Log("omg pls leave the button");
+        //layer 8 is hand
+            if(valid)
+            {
+                text.color = new Vector4(15, 220f, 110f, 255f);
+                GetComponent<Image>().color = new Vector4(205f, 205f, 205f, 255f);
+            }
+            else
+            {
+                text.color = new Vector4(220, 110f, 15f, 255f);
+                GetComponent<Image>().color = new Vector4(100f, 178f, 188f, 255f);
+            }
     }
 }

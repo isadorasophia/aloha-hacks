@@ -230,9 +230,6 @@ MonoBehaviour:
   m_pMarker: {fileID: 1378201043788758, guid: 1dda27b6ed610ad4c84be56b9f069303, type: 3}
   m_pConfetti: {fileID: 1806836418493204, guid: 0cecbb25c26f8482484bd192c9b194f0,
     type: 3}
-  m_pNormalMaterial: {fileID: 2100000, guid: 3ec3f347e63cb4944aed1a81f5518918, type: 2}
-  m_pColliderDisabledMaterial: {fileID: 2100000, guid: 361a6d575d7802343b7e594052a50d41,
-    type: 2}
   BallSkins:
   - {fileID: 2100000, guid: 61371fffb877aa74196ee3f8f45d6cf2, type: 2}
   - {fileID: 2100000, guid: 2c27fca61da19bd4ba64a043c3a02700, type: 2}
@@ -240,4 +237,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: dd244aa421416db4886836c1fd2d18db, type: 2}
   - {fileID: 2100000, guid: bb836788d23eeab4e858effc3a862334, type: 2}
   - {fileID: 2100000, guid: 8f6234392f91fa34484281ea9dc4c319, type: 2}
-  m_valid: 0
+  m_pCanvas: {fileID: 7480586805239376346, guid: 592f4bc3b290aa94f9f3149b94d7115e,
+    type: 3}
+  m_bLastCaughtByLeftHand: 0
+  m_nHowManyTimesCaughtByHands: 0
